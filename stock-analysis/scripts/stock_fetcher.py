@@ -431,10 +431,15 @@ class GlobalStockDataFetcher:
             else:
                 buy_percent = hold_percent = sell_percent = 0
             
+            try:
+                date_str = recommendations.index[-1].strftime('%Y-%m-%d')
+            except (AttributeError, ValueError):
+                date_str = str(recommendations.index[-1])
+
             return {
                 'symbol': symbol,
                 'has_recommendations': True,
-                'date': recommendations.index[-1].strftime('%Y-%m-%d'),
+                'date': date_str,
                 'total_analysts': total_analysts,
                 'buy_count': buy_count,
                 'hold_count': hold_count,

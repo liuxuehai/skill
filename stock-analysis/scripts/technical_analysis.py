@@ -203,7 +203,9 @@ class TechnicalAnalyzer:
         for i in range(1, len(df_macd)):
             prev_row = df_macd.iloc[i-1]
             curr_row = df_macd.iloc[i]
-            
+
+            date_col = 'trade_date' if 'trade_date' in df_macd.columns else 'date'
+
             # MACD上穿信号线
             if (prev_row['MACD'] <= prev_row['MACD_signal'] and 
                 curr_row['MACD'] > curr_row['MACD_signal'] and
@@ -212,7 +214,7 @@ class TechnicalAnalyzer:
                 signals.append(TradingSignal(
                     signal_type=SignalType.BUY,
                     price=curr_row['close'],
-                    date=curr_row['trade_date'],
+                    date=curr_row[date_col],
                     indicator_name="MACD金叉",
                     confidence=0.8,
                     reason="MACD上穿信号线，形成买入信号"
@@ -226,7 +228,7 @@ class TechnicalAnalyzer:
                 signals.append(TradingSignal(
                     signal_type=SignalType.SELL,
                     price=curr_row['close'],
-                    date=curr_row['trade_date'],
+                    date=curr_row[date_col],
                     indicator_name="MACD死叉",
                     confidence=0.8,
                     reason="MACD下穿信号线，形成卖出信号"
@@ -246,7 +248,9 @@ class TechnicalAnalyzer:
         for i in range(1, len(df_rsi)):
             prev_row = df_rsi.iloc[i-1]
             curr_row = df_rsi.iloc[i]
-            
+
+            date_col = 'trade_date' if 'trade_date' in df_rsi.columns else 'date'
+
             # RSI从超卖区域反弹
             if (prev_row['RSI14'] <= oversold and 
                 curr_row['RSI14'] > oversold and
@@ -255,7 +259,7 @@ class TechnicalAnalyzer:
                 signals.append(TradingSignal(
                     signal_type=SignalType.BUY,
                     price=curr_row['close'],
-                    date=curr_row['trade_date'],
+                    date=curr_row[date_col],
                     indicator_name="RSI反弹",
                     confidence=0.6,
                     reason=f"RSI从超卖区域({oversold})反弹"
@@ -269,7 +273,7 @@ class TechnicalAnalyzer:
                 signals.append(TradingSignal(
                     signal_type=SignalType.SELL,
                     price=curr_row['close'],
-                    date=curr_row['trade_date'],
+                    date=curr_row[date_col],
                     indicator_name="RSI回落",
                     confidence=0.6,
                     reason=f"RSI从超买区域({overbought})回落"
@@ -289,7 +293,9 @@ class TechnicalAnalyzer:
         for i in range(1, len(df_bb)):
             prev_row = df_bb.iloc[i-1]
             curr_row = df_bb.iloc[i]
-            
+
+            date_col = 'trade_date' if 'trade_date' in df_bb.columns else 'date'
+
             # 价格从下轨反弹
             if (prev_row['close'] <= prev_row['BB_lower'] and 
                 curr_row['close'] > prev_row['BB_lower'] and
@@ -298,7 +304,7 @@ class TechnicalAnalyzer:
                 signals.append(TradingSignal(
                     signal_type=SignalType.BUY,
                     price=curr_row['close'],
-                    date=curr_row['trade_date'],
+                    date=curr_row[date_col],
                     indicator_name="布林带反弹",
                     confidence=0.6,
                     reason="价格从布林带下轨反弹"
@@ -311,7 +317,7 @@ class TechnicalAnalyzer:
                 signals.append(TradingSignal(
                     signal_type=SignalType.SELL,
                     price=curr_row['close'],
-                    date=curr_row['trade_date'],
+                    date=curr_row[date_col],
                     indicator_name="布林带超买",
                     confidence=0.5,
                     reason="价格触及布林带上轨，可能超买"
@@ -331,7 +337,9 @@ class TechnicalAnalyzer:
         for i in range(1, len(df_kdj)):
             prev_row = df_kdj.iloc[i-1]
             curr_row = df_kdj.iloc[i]
-            
+
+            date_col = 'trade_date' if 'trade_date' in df_kdj.columns else 'date'
+
             # K线从超卖区域反弹
             if (prev_row['K'] <= 20 and curr_row['K'] > 20 and
                 not pd.isna(curr_row['K'])):
@@ -339,7 +347,7 @@ class TechnicalAnalyzer:
                 signals.append(TradingSignal(
                     signal_type=SignalType.BUY,
                     price=curr_row['close'],
-                    date=curr_row['trade_date'],
+                    date=curr_row[date_col],
                     indicator_name="KDJ反弹",
                     confidence=0.6,
                     reason="K线从超卖区域(20以下)反弹"
@@ -347,12 +355,12 @@ class TechnicalAnalyzer:
             
             # K线从超买区域回落
             elif (prev_row['K'] >= 80 and curr_row['K'] < 80 and
-                  not pd.isna(curr_row['K'])):
+                not pd.isna(curr_row['K'])):
                 
                 signals.append(TradingSignal(
                     signal_type=SignalType.SELL,
                     price=curr_row['close'],
-                    date=curr_row['trade_date'],
+                    date=curr_row[date_col],
                     indicator_name="KDJ回落",
                     confidence=0.6,
                     reason="K线从超买区域(80以上)回落"
