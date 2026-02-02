@@ -18,7 +18,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project.scripts]
-stock-analyzer = "scripts.us_stock_analyzer:main"
+stock-analyzer = "scripts.stock_analyzer:main"
 
 [tool.uv]
 dev-dependencies = [

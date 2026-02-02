@@ -31,14 +31,14 @@ pip install yfinance pandas numpy matplotlib seaborn
 python example.py
 
 # 运行全球股票分析器
-python scripts/stock_analyzer.py
+python scripts/us_stock_analyzer.py
 ```
 
 ### 3. 代码中使用
 
 ```python
-from scripts.stock_analyzer import GlobalStockAnalyzer
-from scripts.stock_fetcher import GlobalStockDataFetcher
+from scripts.us_stock_analyzer import GlobalStockAnalyzer
+from scripts.us_stock_fetcher import GlobalStockDataFetcher
 
 # 创建分析器
 analyzer = GlobalStockAnalyzer()
@@ -166,8 +166,7 @@ analyzer.print_global_stock_report(result)
 ### 示例1: 分析阿里巴巴(BABA)
 
 ```bash
-cd stock-analysis
-python scripts/us_stock_analyzer.py BABA
+cd stock-analysis\n# Analyze global stocks via Yahoo Finance\n# Analyze global stocks via Yahoo Finance\npython scripts/us_stock_analyzer.py BABA
 ```
 
 输出示例：
